@@ -13,8 +13,8 @@ namespace crypto
 			key_pair() = default;
 
 			bool load_public(const std::string& key);
-
 			bool load_private(const std::string& key);
+
 			std::string get_private() const;
 			std::string get_public() const;
 
@@ -27,11 +27,13 @@ namespace crypto
 		static std::string encrypt(const std::string& plain,
 		                           const std::string& public_key,
 		                           bool public_key_as_base64 = false);
+
 		static std::string encrypt(const std::string& plain,
 		                           const uint8_t* public_key,
 		                           size_t public_key_size);
 
 		static std::string decrypt(const std::string& cipher, key_pair& kp);
+
 		static std::string decrypt(const std::string& cipher,
 		                           const std::string& private_key,
 		                           bool private_key_as_base64 = false);

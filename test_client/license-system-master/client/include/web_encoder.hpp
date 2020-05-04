@@ -14,10 +14,9 @@ public:
 
 private:
 	int32_t handle_encryption();
-
 	int32_t handle_decryption();
-
 	int32_t handle_generate_aes_key_pair();
+
 	std::string encrypt(const std::string& data, const bool rsa);
 	std::string decrypt(const std::string& cipher, const bool rsa);
 	std::string generate_key_pair();

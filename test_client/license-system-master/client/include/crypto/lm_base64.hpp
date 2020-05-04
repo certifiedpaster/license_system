@@ -17,6 +17,7 @@ namespace crypto
 		static std::string encode(const uint8_t* data,
 		                          size_t length,
 		                          bool encode_for_url = false);
+
 		static std::string decode(const std::string& encoded);
 
 		static binary_t decode_binary(const std::string& encoded);
