@@ -1,4 +1,6 @@
 <?php
+set_time_limit(0);
+
 include 'Database.php';
 include 'Enum.php';
 
@@ -39,7 +41,7 @@ class Server
         return isset($_GET[Config::GET_Parameter]) ? $_GET[Config::GET_Parameter] : false;
     }
 
-    public function handle($client_data)
+   public function handle($client_data)
     {
         $j = json_decode(Crypto::rsa_decrypt($client_data, Config::RSA_PrivateKey));
         $this->set_aes_key_pair($j->key, $j->iv);
@@ -54,11 +56,23 @@ class Server
                 break;
         }
 
-        echo Crypto::aes_encrypt(addslashes(json_encode(array("code" => $this->m_Error),
-            JSON_FORCE_OBJECT)),
+        echo Crypto::aes_encrypt(json_encode(array("code" => $this->m_Error),
+            JSON_FORCE_OBJECT),
             $this->m_Key,
             $this->m_Iv
         );
+    }
+
+
+    private function set_aes_key_pair($key, $iv)
+    {
+        $this->m_Key = $key;
+        $this->m_Iv = $iv;
+    }
+
+    private function aes_decrypt($cipher)
+    {
+        return Crypto::aes_decrypt($cipher, $this->m_Key, $this->m_Iv);
     }
 
     private function handle_login($j)
@@ -131,21 +145,5 @@ class Server
     private function set_last_error($error)
     {
         $this->m_Error = $error;
-    }
-
-    private function aes_decrypt($cipher)
-    {
-        return Crypto::aes_decrypt($cipher, $this->m_Key, $this->m_Iv);
-    }
-
-    private function aes_encrypt($input)
-    {
-        return Crypto::aes_encrypt($input, $this->m_Key, $this->m_Iv);
-    }
-
-    private function set_aes_key_pair($key, $iv)
-    {
-        $this->m_Key = $key;
-        $this->m_Iv = $iv;
     }
 }
