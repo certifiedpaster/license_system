@@ -8,7 +8,7 @@ class Crypto
         $command = sprintf("cd %s && ./%s -e aes -i %s --key %s --iv %s",
             escapeshellarg(Config::Encoder_Path),
             Config::Encoder_Name,
-            escapeshellarg ($input),
+            escapeshellarg($input),
             escapeshellarg($key),
             escapeshellarg($iv)
         );
@@ -36,10 +36,10 @@ class Crypto
     static public function rsa_decrypt($cipher, $private_key)
     {
         $command = sprintf("cd %s && ./%s -d rsa -i %s --private %s",
-           escapeshellarg (Config::Encoder_Path),
-            Config::Encoder_Name,
-           escapeshellarg ($cipher),
-            escapeshellarg ($private_key)
+           escapeshellarg(Config::Encoder_Path),
+           Config::Encoder_Name,
+           escapeshellarg($cipher),
+           escapeshellarg($private_key)
         );
 
         return exec($command);
